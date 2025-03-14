@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌌 **<span style="color:blue">AstroGlossary</span>**
 
-## Getting Started
+AstroCatalogue is a personal project dedicated to **astrophotography**. 🚀
+The app allows users to contribute photos of different **celestial bodies** and **structures**, creating a comprehensive archive of the **night sky** and **deep space images**. ✨
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📂 **<span style="color:#66ccff">Initial planned features</span>**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🛸 <span style="color:#ff6666">User Accounts</span>
+Create an account to join the cosmic community and share your astrophotography.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🌠 <span style="color:#66ff66">Add a New Photo Subject</span>
+For the explorers out there! Contribute by adding a new celestial object to the archive.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📸 <span style="color:#ffcc99">Upload Photos</span>
+Enhance the collection by adding your stunning shots to a specific celestial subject.
 
-## Learn More
+### 🔭 <span style="color:#9999ff">Scientific Information</span>
+Each subject comes with detailed **astronomical data**: planets, stars, constellations, and more!
 
-To learn more about Next.js, take a look at the following resources:
+### ⭐ <span style="color:#ffcc00">Photo Ratings</span>
+Rate photos and appreciate breathtaking astrophotography from fellow stargazers.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🌍 <span style="color:#66ffff">Discover Tab</span>
+Explore the vast universe through curated content and trending celestial captures.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+✨ *Join AstroCatalogue and be part of the ultimate celestial archive!* 🌙
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
