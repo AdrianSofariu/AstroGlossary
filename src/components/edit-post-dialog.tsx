@@ -21,6 +21,10 @@ import {
 import { UserPost, Post } from "@/types";
 import { Pencil } from "lucide-react";
 
+function startsWithLetter(str: string) {
+  return /^[A-Za-z]/.test(str);
+}
+
 export default function EditPostDialog({ post }: UserPost) {
   const { types, updatePost } = usePosts();
 
@@ -47,6 +51,10 @@ export default function EditPostDialog({ post }: UserPost) {
 
     if (!types.includes(editedPost.type)) {
       return alert("Invalid type");
+    }
+
+    if (startsWithLetter(editedPost.title) === false) {
+      return alert("Title must start with a letter");
     }
 
     const updatedPost: Post = {

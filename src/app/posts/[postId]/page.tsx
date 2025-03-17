@@ -55,6 +55,7 @@ export default function SinglePostPage() {
         <Image
           alt=""
           src={post.source}
+          priority={true}
           fill={true}
           sizes="(max-width: 70vw) 70vw, (max-height: 50vh) 50vh"
           className={cn(

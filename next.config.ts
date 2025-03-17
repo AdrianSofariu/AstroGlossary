@@ -12,9 +12,20 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "upload.wikimedia.org",
-        pathname: "/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1200px-FullMoon2010.jpg",
-      }
-    ]
+        pathname:
+          "/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1200px-FullMoon2010.jpg",
+      },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        pathname:
+          "/wikipedia/commons/c/ca/Star-forming_region_S106_%28captured_by_the_Hubble_Space_Telescope%29.jpg",
+      },
+      {
+        protocol: "https",
+        hostname: "*",
+      },
+    ],
   },
 };
 

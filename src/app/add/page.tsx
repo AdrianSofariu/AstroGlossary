@@ -15,6 +15,10 @@ import {
 } from "@/components/ui/select";
 import { Post } from "@/types";
 
+function startsWithLetter(str: string) {
+  return /^[A-Za-z]/.test(str);
+}
+
 export default function AddImagePage() {
   const { types, addPost } = usePosts(); // Get types from context
   const [newPost, setNewPost] = useState({
@@ -44,6 +48,10 @@ export default function AddImagePage() {
 
     if (!types.includes(newPost.type)) {
       return alert("Invalid type");
+    }
+
+    if (startsWithLetter(newPost.title) === false) {
+      return alert("Title must start with a letter");
     }
 
     const post: Post = {
