@@ -63,6 +63,7 @@ export default function EditPostDialog({ post }: UserPost) {
       type: editedPost.type,
       subject: editedPost.subject,
       source: editedPost.source,
+      date: post.date,
     };
 
     updatePost(post.id, updatedPost);

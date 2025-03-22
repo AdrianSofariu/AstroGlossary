@@ -1,15 +1,16 @@
-export type Post ={
-    id: string;
-    title: string;
-    type: string;
-    subject: string;
-    source: string;
-}
+export type Post = {
+  id: string;
+  title: string;
+  type: string;
+  subject: string;
+  source: string;
+  date: Date;
+};
 
 export type UserPost = {
-    post: Post;
-}
+  post: Post;
+};
 
 export type UserPostList = {
-    posts: Post[];
-}
+  posts: Post[];
+};

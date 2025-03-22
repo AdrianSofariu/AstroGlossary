@@ -60,6 +60,7 @@ export default function AddImagePage() {
       type: newPost.type,
       subject: newPost.subject,
       source: newPost.imageSrc,
+      date: new Date(),
     };
 
     addPost(post); // Add new post
@@ -94,7 +95,7 @@ export default function AddImagePage() {
               </SelectTrigger>
               <SelectContent>
                 {types.map((type) => (
-                  <SelectItem key={type} value={type}>
+                  <SelectItem key={type} value={type} title={type}>
                     {type}
                   </SelectItem>
                 ))}

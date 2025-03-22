@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogHeader,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import Link from "next/link";
 import EditPostDialog from "@/components/edit-post-dialog";
@@ -43,6 +44,7 @@ export default function SinglePostPage() {
       <div className="absolute top-4 right-4 flex space-x-2">
         <EditPostDialog post={post} />
         <Button
+          data-testid="delete-post"
           onClick={() => setOpen(true)}
           size="icon"
           className="bg-[#181832] hover:bg-pink-500 text-white rounded-full"
@@ -71,19 +73,30 @@ export default function SinglePostPage() {
         <h1 className="text-4xl font-bold">{post.title}</h1>
         <p className="text-gray-600 text-lg">Type: {post.type}</p>
         <p className="text-gray-700">{post.subject}</p>
+        <p className="text-gray-500 text-sm mt-2">
+          {post.date.toLocaleDateString("en-GB")}
+        </p>
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Are you sure?</DialogTitle>
-            <p>This action cannot be undone.</p>
+            <DialogDescription>This action cannot be undone.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={() => setOpen(false)} variant="outline">
+            <Button
+              data-testid="cancelDelete"
+              onClick={() => setOpen(false)}
+              variant="outline"
+            >
               Cancel
             </Button>
-            <Button onClick={handleDelete} variant="destructive">
+            <Button
+              data-testid="confirmDelete"
+              onClick={handleDelete}
+              variant="destructive"
+            >
               Delete
             </Button>
           </DialogFooter>

@@ -36,6 +36,7 @@ export const ContextProvider = ({ children }: any) => {
       subject: "Milky Way",
       source:
         "https://darksky.org/app/uploads/2021/07/DSC_8700-Pano-Edit-scaled.jpg",
+      date: new Date(),
     },
     {
       id: "2",
@@ -44,6 +45,7 @@ export const ContextProvider = ({ children }: any) => {
       subject: "Milky Way",
       source:
         "https://darksky.org/app/uploads/2021/07/DSC_8700-Pano-Edit-scaled.jpg",
+      date: new Date(2025, 0, 1),
     },
     {
       id: "3",
@@ -52,6 +54,7 @@ export const ContextProvider = ({ children }: any) => {
       subject: "Milky Way",
       source:
         "https://darksky.org/app/uploads/2021/07/DSC_8700-Pano-Edit-scaled.jpg",
+      date: new Date(2022, 9, 10),
     },
     {
       id: "4",
@@ -60,6 +63,7 @@ export const ContextProvider = ({ children }: any) => {
       subject: "Milky Way",
       source:
         "https://darksky.org/app/uploads/2021/07/DSC_8700-Pano-Edit-scaled.jpg",
+      date: new Date(2025, 2, 21),
     },
     {
       id: "5",
@@ -68,6 +72,7 @@ export const ContextProvider = ({ children }: any) => {
       subject: "Angel Nebula",
       source:
         "https://upload.wikimedia.org/wikipedia/commons/c/ca/Star-forming_region_S106_%28captured_by_the_Hubble_Space_Telescope%29.jpg",
+      date: new Date(2025, 0, 5),
     },
     {
       id: "6",
@@ -76,6 +81,7 @@ export const ContextProvider = ({ children }: any) => {
       subject: "C/2023 A3 (Tsuchinshan-ATLAS)",
       source:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Comet_Tsuchinshan%E2%80%93ATLAS_over_Ohio_%28Composite%29.jpg/435px-Comet_Tsuchinshan%E2%80%93ATLAS_over_Ohio_%28Composite%29.jpg",
+      date: new Date(2025, 2, 19),
     },
   ]);
 
