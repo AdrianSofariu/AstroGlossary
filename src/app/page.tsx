@@ -1,6 +1,6 @@
 import PostGrid from "@/components/gallery";
 import { SearchBar } from "@/components/search-bar";
-
+import { Pagination } from "@/components/ui/pagination";
 
 export default function Home() {
   return (
@@ -12,10 +12,10 @@ export default function Home() {
     </div>*/
     <div className="pl-8 w-full flex-row">
       <div className="flex justify-center w-full">
-        <SearchBar/>
+        <SearchBar />
       </div>
-      <PostGrid/> 
+      <PostGrid />
+      <Pagination />
     </div>
-     
   );
 }

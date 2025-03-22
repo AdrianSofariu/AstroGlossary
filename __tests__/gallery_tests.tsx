@@ -11,6 +11,18 @@ jest.mock("@/app/context", () => ({
   usePosts: jest.fn(),
 }));
 
+//mock navigation
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    pathname: "/",
+    query: {},
+  }),
+  useSearchParams: jest.fn(() => new URLSearchParams()),
+}));
+
 const mockPosts: Post[] = [
   {
     id: "1",

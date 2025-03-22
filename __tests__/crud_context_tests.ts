@@ -25,7 +25,7 @@ describe("ContextProvider", () => {
       });
     });
 
-    expect(result.current.posts.length).toBe(7);
+    expect(result.current.posts.length).toBe(21);
   });
 
   //test adding invalid type post
@@ -45,7 +45,7 @@ describe("ContextProvider", () => {
       });
     });
 
-    expect(result.current.posts.length).toBe(6);
+    expect(result.current.posts.length).toBe(20);
   });
 
   //test update post
@@ -78,6 +78,6 @@ describe("ContextProvider", () => {
       result.current.deletePost("1");
     });
 
-    expect(result.current.posts.length).toBe(5);
+    expect(result.current.posts.length).toBe(19);
   });
 });

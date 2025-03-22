@@ -6,9 +6,21 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePosts } from "@/app/context";
 import { isToday, isThisWeek, formatDistanceToNow } from "date-fns";
+import { Pagination } from "./ui/pagination";
+import { PaginationControls } from "./page_nav";
+import { useSearchParams } from "next/navigation";
 
 export default function PostGrid() {
-  const posts = usePosts().getFilteredPosts();
+  //const posts = usePosts().getFilteredPosts();
+  const searchParams = useSearchParams();
+
+  const page = searchParams.get("page") ?? "1";
+  const pageSize = searchParams.get("pageSize") ?? "8";
+
+  const start = (Number(page) - 1) * Number(pageSize);
+  const end = start + Number(pageSize);
+
+  const posts = usePosts().getFilteredPosts().slice(start, end);
 
   const { getFilteredPosts } = usePosts();
 
@@ -19,11 +31,19 @@ export default function PostGrid() {
   }, [getFilteredPosts]);
 
   return (
-    <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-        {posts.map((item) => (
-          <BlurImage key={item.id} post={item} />
-        ))}
+    <div className="pb-8">
+      <div className="max-w-2xl mx-auto py-8 px-4 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          {posts.map((item) => (
+            <BlurImage key={item.id} post={item} />
+          ))}
+        </div>
+      </div>
+      <div className="py-2 flex justify-center">
+        <PaginationControls
+          hasNextPage={end < filteredPosts.length}
+          hasPreviousPage={start > 0}
+        />
       </div>
     </div>
   );
