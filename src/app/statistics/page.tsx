@@ -10,6 +10,7 @@ import {
   Legend,
 } from "recharts";
 import { usePosts } from "@/app/context";
+import FakeItemGenerator from "@/components/faker";
 
 const COLORS = [
   "#8B5CF6", // Nebula Purple
@@ -64,6 +65,7 @@ export default function PostChart() {
           />
         </PieChart>
       </ResponsiveContainer>
+      <FakeItemGenerator />
     </div>
   );
 }

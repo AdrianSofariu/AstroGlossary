@@ -5,6 +5,7 @@ import { Filter, Search } from "lucide-react";
 import { DropdownMenuCheckboxes } from "./type-filter";
 import { usePosts } from "@/app/context";
 import { useRouter, useSearchParams } from "next/navigation";
+import { DropdownPageSize } from "./pageSize-dropdown";
 
 export function SearchBar() {
   const { searchTerm, setSearchTerm } = usePosts();
@@ -29,6 +30,7 @@ export function SearchBar() {
       <Search />
       {/* </Button> */}
       <DropdownMenuCheckboxes />
+      <DropdownPageSize />
     </div>
   );
 }

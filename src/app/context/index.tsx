@@ -1,7 +1,6 @@
 "use client";
 import { Post } from "@/types";
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
 
 // Define the context type
 type AppContextType = {
@@ -282,6 +281,159 @@ export const ContextProvider = ({ children }: any) => {
       source:
         "https://upload.wikimedia.org/wikipedia/commons/c/ca/Star-forming_region_S106_%28captured_by_the_Hubble_Space_Telescope%29.jpg",
       date: new Date(2025, 0, 5),
+    },
+    {
+      id: "21",
+      title: "Mars",
+      type: "planet",
+      subject: "Mars",
+      source:
+        "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg",
+      date: new Date(2025, 2, 24),
+    },
+    {
+      id: "22",
+      title: "Mars",
+      type: "planet",
+      subject: "Mars",
+      source:
+        "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "23",
+      title: "Mars",
+      type: "planet",
+      subject: "Mars",
+      source:
+        "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg",
+      date: new Date(2025, 2, 24),
+    },
+    {
+      id: "24",
+      title: "Mars",
+      type: "planet",
+      subject: "Mars",
+      source:
+        "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg",
+      date: new Date(2025, 2, 24),
+    },
+    {
+      id: "25",
+      title: "Mars",
+      type: "planet",
+      subject: "Mars",
+      source:
+        "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg",
+      date: new Date(2025, 2, 24),
+    },
+    {
+      id: "26",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "27",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "28",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "29",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "30",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "31",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "32",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "33",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "34",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "35",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 25),
+    },
+    {
+      id: "36",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 24),
+    },
+    {
+      id: "37",
+      title: "Andormeda Photo",
+      type: "galaxy",
+      subject: "Andromeda",
+      source:
+        "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
+      date: new Date(2025, 2, 24),
     },
   ]);
 

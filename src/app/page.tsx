@@ -1,3 +1,4 @@
+import FakeItemGenerator from "@/components/faker";
 import PostGrid from "@/components/gallery";
 import { SearchBar } from "@/components/search-bar";
 import { Pagination } from "@/components/ui/pagination";

@@ -34,9 +34,9 @@ export function PaginationControls({
 
     let currentPage = Number(page);
 
-    //always show the first page
+    //always show the first page and the page before the current page
     if (currentPage - delta > 2) {
-      visiblePages.push(1, "...");
+      visiblePages.push(1, "...", currentPage - 1);
     } else {
       for (let i = 1; i < currentPage; i++) visiblePages.push(i);
     }
@@ -44,9 +44,9 @@ export function PaginationControls({
     //current page
     visiblePages.push(currentPage);
 
-    //always show the last page
+    //always show the last page and the page after the current page
     if (currentPage + delta < totalPages - 1) {
-      visiblePages.push("...", totalPages);
+      visiblePages.push(currentPage + 1, "...", totalPages);
     } else {
       for (let i = currentPage + 1; i <= totalPages; i++) visiblePages.push(i);
     }
@@ -94,7 +94,7 @@ export function PaginationControls({
               </PaginationLink>
             </PaginationItem>
           ) : (
-            <PaginationItem>
+            <PaginationItem key="ellipsis">
               <PaginationEllipsis />
             </PaginationItem>
           )
