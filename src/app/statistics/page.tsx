@@ -12,6 +12,12 @@ import {
 import { usePosts } from "@/app/context";
 import FakeItemGenerator from "@/components/faker";
 
+interface ChartData {
+  name: string;
+  value: number;
+  color: string;
+}
+
 const COLORS = [
   "#8B5CF6", // Nebula Purple
   "#FF007F", // Cosmic Magenta
@@ -23,12 +29,12 @@ const COLORS = [
 ];
 
 export default function PostChart() {
-  const { posts } = usePosts();
+  const { allPosts } = usePosts();
 
   // Count posts per type
-  const data = useMemo(() => {
+  const chartData = useMemo(() => {
     const typeCounts: Record<string, number> = {};
-    posts.forEach((post) => {
+    allPosts.forEach((post) => {
       typeCounts[post.type] = (typeCounts[post.type] || 0) + 1;
     });
 
@@ -37,7 +43,7 @@ export default function PostChart() {
       value: typeCounts[type],
       color: COLORS[index % COLORS.length], // Cycle through colors
     }));
-  }, [posts]);
+  }, [allPosts]);
 
   return (
     <div className="w-full max-w-md mx-auto bg-white p-4 rounded-lg shadow-md">
@@ -45,14 +51,14 @@ export default function PostChart() {
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
-            data={data}
+            data={chartData}
             cx="50%"
             cy="50%"
             outerRadius={80}
             dataKey="value"
             label
           >
-            {data.map((entry, index) => (
+            {chartData.map((entry: ChartData, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>

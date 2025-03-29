@@ -5,7 +5,6 @@ import { usePosts } from "@/app/context";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Trash2, Pencil } from "lucide-react";
-import { BlurImage } from "@/components/gallery";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -17,7 +16,6 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
-import Link from "next/link";
 import EditPostDialog from "@/components/edit-post-dialog";
 
 export default function SinglePostPage() {
@@ -37,6 +35,7 @@ export default function SinglePostPage() {
     deletePost(post.id);
     setOpen(false);
     router.push("/"); // Redirect after deleting
+    console.log("Post deleted:", post.id);
   };
 
   return (

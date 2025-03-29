@@ -21,12 +21,15 @@ import { useRouter } from "next/navigation";
 
 export function DropdownPageSize() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  let pageSize = searchParams.get("pageSize") ?? "8";
-  let page = searchParams.get("page") ?? "1";
+  const { setPagination } = usePosts();
 
   const changePageSize = (newPageSize: string) => {
-    router.push(`/?page=${page}&pageSize=${newPageSize}`);
+    setPagination((prev) => ({
+      ...prev,
+      page: 1,
+      limit: parseInt(newPageSize),
+    }));
+    router.push(`/?page=${1}&pageSize=${newPageSize}`);
   };
 
   return (

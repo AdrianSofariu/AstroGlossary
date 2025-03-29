@@ -8,12 +8,12 @@ const FakeItemGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null); // To store the interval ID
 
-  const { posts, types, addPost } = usePosts(); // Get types from context
+  const { addPost } = usePosts(); // Get types from context
 
   // Function to generate a fake item
   const generateItem = () => {
     const newItem: Post = {
-      id: "22",
+      id: Date.now().toString(),
       title: "Moon",
       type: "planetoid",
       subject: "Moon",

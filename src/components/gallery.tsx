@@ -3,32 +3,23 @@ import { cn } from "@/lib/utils";
 import { UserPost } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePosts } from "@/app/context";
 import { isToday, isThisWeek, formatDistanceToNow } from "date-fns";
-import { Pagination } from "./ui/pagination";
 import { PaginationControls } from "./page_nav";
 import { useSearchParams } from "next/navigation";
 
 export default function PostGrid() {
-  //const posts = usePosts().getFilteredPosts();
-  const searchParams = useSearchParams();
+  const { posts, pagination, setPagination } = usePosts();
 
-  const page = searchParams.get("page") ?? "1";
-  const pageSize = searchParams.get("pageSize") ?? "8";
+  //Retrieve page and pageSize from URL search params
+  //If not present, default to 1 and 8 respectively
+  const page = pagination.page;
+  const pageSize = pagination.limit;
 
-  const start = (Number(page) - 1) * Number(pageSize);
-  const end = start + Number(pageSize);
-
-  const posts = usePosts().getFilteredPosts().slice(start, end);
-
-  const { getFilteredPosts } = usePosts();
-
-  const [filteredPosts, setFilteredPosts] = useState(getFilteredPosts());
-
-  useEffect(() => {
-    setFilteredPosts(getFilteredPosts());
-  }, [getFilteredPosts]);
+  //Calculate the posts to display based on the current page and pageSize
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
 
   return (
     <div className="pb-8">
@@ -41,8 +32,12 @@ export default function PostGrid() {
       </div>
       <div className="py-2 flex justify-center">
         <PaginationControls
-          hasNextPage={end < filteredPosts.length}
+          hasNextPage={end < pagination.total}
           hasPreviousPage={start > 0}
+          onNext={() => setPagination((prev) => ({ ...prev, page: page + 1 }))}
+          onPrevious={() =>
+            setPagination((prev) => ({ ...prev, page: page - 1 }))
+          }
         />
       </div>
     </div>

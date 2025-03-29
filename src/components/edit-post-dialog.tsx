@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { UserPost, Post } from "@/types";
 import { Pencil } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 function startsWithLetter(str: string) {
   return /^[A-Za-z]/.test(str);
@@ -27,6 +28,7 @@ function startsWithLetter(str: string) {
 
 export default function EditPostDialog({ post }: UserPost) {
   const { types, updatePost } = usePosts();
+  const router = useRouter();
 
   const [editedPost, setEditedPost] = useState({
     id: post.id,
@@ -66,7 +68,7 @@ export default function EditPostDialog({ post }: UserPost) {
       date: post.date,
     };
 
-    updatePost(post.id, updatedPost);
+    updatePost(updatedPost);
   };
 
   return (
