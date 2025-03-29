@@ -1,31 +1,19 @@
-# 🌌 **<span style="color:blue">AstroGlossary</span>**
+Welcome to the Next.js Astrophotography Learning Project! This project is a simple showcase of astrophotography images, built using the Next.js framework. It serves as a learning exercise to understand the basics of Next.js, including routing, dynamic image display, and styling. In this project, we are combining the beauty of astrophotography with the power of Next.js to create an interactive and visually appealing gallery.
 
-AstroCatalogue is a personal project dedicated to **astrophotography**. 🚀
-The app allows users to contribute photos of different **celestial bodies** and **structures**, creating a comprehensive archive of the **night sky** and **deep space images**. ✨
+Project Overview
+Astrophotography captures the wonders of space, and this project showcases stunning images of galaxies, stars, nebulae, and more. Using Next.js, we built a responsive, performance-optimized website to display these photos. The project includes:
 
----
+Static image pages with information about each astrophotograph.
 
-## 📂 **<span style="color:#66ccff">Initial planned features</span>**
+A gallery with images dynamically fetched and displayed using Next.js API routes.
 
-### 🛸 <span style="color:#ff6666">User Accounts</span>
-Create an account to join the cosmic community and share your astrophotography.
+Custom styling and layout to make the images stand out.
 
-### 🌠 <span style="color:#66ff66">Add a New Photo Subject</span>
-For the explorers out there! Contribute by adding a new celestial object to the archive.
+Features
+Dynamic Image Loading: Use of Next.js's Image component to automatically optimize image loading.
 
-### 📸 <span style="color:#ffcc99">Upload Photos</span>
-Enhance the collection by adding your stunning shots to a specific celestial subject.
+Responsive Design: The website is mobile-friendly and adjusts the layout based on screen size.
 
-### 🔭 <span style="color:#9999ff">Scientific Information</span>
-Each subject comes with detailed **astronomical data**: planets, stars, constellations, and more!
+Static Site Generation (SSG): The static pages are generated at build time for fast performance.
 
-### ⭐ <span style="color:#ffcc00">Photo Ratings</span>
-Rate photos and appreciate breathtaking astrophotography from fellow stargazers.
-
-### 🌍 <span style="color:#66ffff">Discover Tab</span>
-Explore the vast universe through curated content and trending celestial captures.
-
----
-
-✨ *Join AstroCatalogue and be part of the ultimate celestial archive!* 🌙
-
+Custom Page Routes: Each image has its dedicated page with additional details about the photograph and the photographer.
