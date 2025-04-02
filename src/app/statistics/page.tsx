@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import {
   PieChart,
   Pie,
@@ -10,28 +10,62 @@ import {
   Legend,
 } from "recharts";
 import { usePosts } from "@/app/context";
-import FakeItemGenerator from "@/components/faker";
+import { io } from "socket.io-client";
+import FileUploader from "@/components/file-uploader";
 
-interface ChartData {
-  name: string;
-  value: number;
-  color: string;
-}
+// Dynamic import to prevent SSR issues
+const socketClientPromise = import("socket.io-client").then(
+  (module) => module.io
+);
 
 const COLORS = [
   "#8B5CF6", // Nebula Purple
   "#FF007F", // Cosmic Magenta
   "#1E1B4B", // Deep Space Blue
   "#36A2EB", // Stellar Cyan
-  "#FACC15", // Supernova Yellow
   "#FF6B35", // Solar Flare Orange
   "#5A189A", // Galactic Violet
 ];
 
 export default function PostChart() {
-  const { allPosts } = usePosts();
+  const { allPosts, fetchAllPosts } = usePosts();
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [socket, setSocket] = useState<any>(null);
 
-  // Count posts per type
+  useEffect(() => {
+    const newSocket = io(
+      process.env.API_CONNECTION_STRING || "http://localhost:3001"
+    );
+
+    newSocket.on("update", async () => {
+      console.log("Received update from server");
+      await fetchAllPosts();
+      console.log(allPosts);
+    });
+
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [fetchAllPosts]);
+
+  // Function to start/stop post generation
+  const toggleGeneration = () => {
+    if (!socket) return;
+
+    if (isGenerating) {
+      socket.emit("stop");
+      console.log("Stopped post generation");
+    } else {
+      socket.emit("start");
+      console.log("Started post generation");
+    }
+
+    setIsGenerating(!isGenerating);
+  };
+
+  // Compute chart data
   const chartData = useMemo(() => {
     const typeCounts: Record<string, number> = {};
     allPosts.forEach((post) => {
@@ -41,37 +75,49 @@ export default function PostChart() {
     return Object.keys(typeCounts).map((type, index) => ({
       name: type,
       value: typeCounts[type],
-      color: COLORS[index % COLORS.length], // Cycle through colors
+      color: COLORS[index % COLORS.length],
     }));
   }, [allPosts]);
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white p-4 rounded-lg shadow-md">
-      <h2 className="text-center text-lg font-bold mb-4">Posts by Type</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={chartData}
-            cx="50%"
-            cy="50%"
-            outerRadius={80}
-            dataKey="value"
-            label
-          >
-            {chartData.map((entry: ChartData, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend
-            layout="vertical"
-            align="right"
-            verticalAlign="middle"
-            formatter={(value) => <span className="text-sm">{value}</span>}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-      <FakeItemGenerator />
+    <div>
+      <div className="w-full max-w-md mx-auto bg-white p-4 rounded-lg shadow-md">
+        <h2 className="text-center text-lg font-bold mb-4">Posts by Type</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              dataKey="value"
+              label
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend
+              layout="vertical"
+              align="right"
+              verticalAlign="middle"
+              formatter={(value) => <span className="text-sm">{value}</span>}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+        <button
+          onClick={toggleGeneration}
+          className={`w-full mt-4 px-4 py-2 rounded-lg text-white font-bold transition ${
+            isGenerating
+              ? "bg-red-500 hover:bg-red-600"
+              : "bg-green-500 hover:bg-green-600"
+          }`}
+        >
+          {isGenerating ? "Stop Generating Posts" : "Start Generating Posts"}
+        </button>
+      </div>
+      <FileUploader />
     </div>
   );
 }

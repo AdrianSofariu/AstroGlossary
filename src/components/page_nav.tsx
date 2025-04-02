@@ -1,4 +1,4 @@
-import { usePosts } from "@/app/context";
+/*import { usePosts } from "@/app/context";
 import {
   Pagination,
   PaginationContent,
@@ -115,4 +115,4 @@ export function PaginationControls({
       </PaginationContent>
     </Pagination>
   );
-}
+}*/

@@ -1,6 +1,6 @@
-import FakeItemGenerator from "@/components/faker";
 import PostGrid from "@/components/gallery";
 import { SearchBar } from "@/components/search-bar";
+import StatusBanner from "@/components/status-banner";
 import { Pagination } from "@/components/ui/pagination";
 
 export default function Home() {
@@ -12,6 +12,7 @@ export default function Home() {
       </footer>
     </div>*/
     <div className="pl-8 w-full flex-row">
+      <StatusBanner />
       <div className="flex justify-center w-full">
         <SearchBar />
       </div>

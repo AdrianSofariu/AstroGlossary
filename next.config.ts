@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  env: {
+    API_CONNECTION_STRING: "http://localhost:3001/api",
+  },
   images: {
     remotePatterns: [
       {

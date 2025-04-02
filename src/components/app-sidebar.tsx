@@ -20,7 +20,7 @@ const items = [
     icon: <Home color="white" />,
   },
   {
-    title: "Explore",
+    title: "Research",
     url: "/statistics",
     icon: <Telescope color="white" />,
   },

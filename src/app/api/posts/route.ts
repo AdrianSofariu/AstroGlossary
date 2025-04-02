@@ -25,7 +25,7 @@ export async function GET(req: Request) {
   }
 
   //filter by types
-  if (typesArray) {
+  if (typesArray.length > 0) {
     filteredPosts = filteredPosts.filter((post) =>
       typesArray.includes(post.type)
     );
@@ -51,8 +51,6 @@ export async function GET(req: Request) {
 // Create a new post
 export async function POST(req: Request) {
   const post: Post = await req.json();
-
-  post.date = new Date(post.date);
   //validate post data
   if (
     !post.title ||
@@ -87,7 +85,8 @@ export async function POST(req: Request) {
     );
   }
   // Check if the date is valid
-  if (isNaN(new Date(post.date).getTime())) {
+  const parsedDate = new Date(post.date);
+  if (isNaN(parsedDate.getTime())) {
     return NextResponse.json({ message: "Invalid date" }, { status: 400 });
   }
 

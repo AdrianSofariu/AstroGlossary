@@ -35,7 +35,6 @@ export default function SinglePostPage() {
     deletePost(post.id);
     setOpen(false);
     router.push("/"); // Redirect after deleting
-    console.log("Post deleted:", post.id);
   };
 
   return (
