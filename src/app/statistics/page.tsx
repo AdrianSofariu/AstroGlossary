@@ -38,9 +38,7 @@ export default function PostChart() {
     );
 
     newSocket.on("update", async () => {
-      console.log("Received update from server");
       await fetchAllPosts();
-      console.log(allPosts);
     });
 
     setSocket(newSocket);

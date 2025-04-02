@@ -128,9 +128,7 @@ export const ContextProvider = ({ children }: any) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("I ran");
       await fetchAllPosts();
-      console.log("All posts fetched:", allPosts.length);
     };
     fetchData();
   }, []);
@@ -139,7 +137,7 @@ export const ContextProvider = ({ children }: any) => {
     if (hasMouted2.current) {
       //Reset posts when offset changes
       posts.length = 0; // Clear posts array
-      console.log("RESET POSTS", posts.length);
+
       // Reset offset and total when search term or checked types change
       pagination.offset = 0; // Reset offset to 0
       fetchPosts();
@@ -211,9 +209,6 @@ export const ContextProvider = ({ children }: any) => {
 
       //add this page to the currently fetched posts
       const newPosts = [...posts, ...data.posts];
-      console.log("Offset:", pagination.offset);
-      console.log("Old posts:", posts);
-      console.log("Fetched posts:", newPosts);
       savePostsToLocalStorage(newPosts); // Save posts to localStorage when offline
       setPosts(newPosts);
       //update offset and total in pagination
@@ -259,6 +254,7 @@ export const ContextProvider = ({ children }: any) => {
       if (response.status === 201) {
         // Fetch posts again to update the list
         pagination.offset = 0; // Reset offset to 0
+        posts.length = 0; // Clear posts array
         fetchPosts();
       }
     } catch (error) {
@@ -291,6 +287,7 @@ export const ContextProvider = ({ children }: any) => {
       if (response.status === 200) {
         alert(response.data.message);
         pagination.offset = 0; // Reset offset to 0
+        posts.length = 0; // Clear posts array
         fetchPosts(); // Fetch posts again to update the list
       }
     } catch (error) {
@@ -320,6 +317,7 @@ export const ContextProvider = ({ children }: any) => {
       if (response.status === 200) {
         alert(response.data.message);
         pagination.offset = 0; // Reset offset to 0
+        posts.length = 0; // Clear posts array
         fetchPosts(); // Fetch posts again to update the list
       }
     } catch (error) {
@@ -349,9 +347,8 @@ export const ContextProvider = ({ children }: any) => {
         ...post,
         date: new Date(post.date),
       }));
-      console.log("Formatted posts:", formattedPosts);
+
       setAllPosts(formattedPosts);
-      console.log("All posts fetched:", formattedPosts);
     } catch (error) {
       if (error instanceof AxiosError) {
         alert("Failed to fetch posts - " + error.response?.data.message);

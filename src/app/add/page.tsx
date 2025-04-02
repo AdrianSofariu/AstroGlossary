@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Post } from "@/types";
+import axios from "axios";
 
 function startsWithLetter(str: string) {
   return /^[A-Za-z]/.test(str);
@@ -25,23 +26,58 @@ export default function AddImagePage() {
     title: "",
     type: "",
     subject: "",
-    imageSrc: "",
+    imageFile: null as File | null,
+    imageSrc: "", // This will store the URL after upload
   });
 
+  // Handle changes in input fields
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPost({ ...newPost, [e.target.name]: e.target.value });
   };
 
+  // Handle the image type selection
   const handleTypeChange = (value: string) => {
     setNewPost({ ...newPost, type: value });
   };
 
-  const handleSubmit = () => {
+  // Handle file input changes
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setNewPost({ ...newPost, imageFile: file });
+    }
+  };
+
+  // Upload image to the server
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await axios.post(
+        `${process.env.API_CONNECTION_STRING}/images/`, // Your backend upload endpoint
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data.fileUrl; // Return the uploaded file URL
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return "";
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = async () => {
     if (
       !newPost.title ||
       !newPost.type ||
       !newPost.subject ||
-      !newPost.imageSrc
+      !newPost.imageFile
     ) {
       return alert("All fields are required!");
     }
@@ -54,19 +90,33 @@ export default function AddImagePage() {
       return alert("Title must start with a letter");
     }
 
+    // Upload the image file and get the URL
+    const imageUrl = await uploadImage(newPost.imageFile);
+
+    if (!imageUrl) {
+      return alert("Image upload failed!");
+    }
+
+    // Create the new post object
     const post: Post = {
       id: Date.now().toString(),
       title: newPost.title,
       type: newPost.type,
       subject: newPost.subject,
-      source: newPost.imageSrc,
+      source: imageUrl, // Store the image URL
       date: new Date(),
     };
 
-    addPost(post); // Add new post
+    addPost(post); // Add the new post
 
-    // Reset form
-    setNewPost({ title: "", type: "", subject: "", imageSrc: "" });
+    // Reset the form
+    setNewPost({
+      title: "",
+      type: "",
+      subject: "",
+      imageFile: null,
+      imageSrc: "",
+    });
   };
 
   return (
@@ -114,21 +164,19 @@ export default function AddImagePage() {
             />
           </div>
 
-          <div className="space-y-2 flex-col">
-            <Label className="text-sm">Image URL</Label>
+          <div className="space-y-2">
+            <Label className="text-sm">Image Upload</Label>
             <Input
-              name="imageSrc"
-              value={newPost.imageSrc}
-              onChange={handleChange}
-              placeholder="Paste image URL"
+              type="file"
+              name="imageFile"
+              accept="image/*"
+              onChange={handleFileChange}
               className="p-3"
             />
-            {newPost.imageSrc && (
-              <img
-                src={newPost.imageSrc}
-                alt="Preview"
-                className="mt-3 h-60 w-full object-cover rounded-lg shadow-md"
-              />
+            {newPost.imageFile && (
+              <div className="mt-3">
+                <p>File selected: {newPost.imageFile.name}</p>
+              </div>
             )}
           </div>
         </CardContent>

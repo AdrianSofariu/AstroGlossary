@@ -25,6 +25,16 @@ const nextConfig: NextConfig = {
           "/wikipedia/commons/c/ca/Star-forming_region_S106_%28captured_by_the_Hubble_Space_Telescope%29.jpg",
       },
       {
+        protocol: "http", // Use 'http' for local development server (Next.js uses http locally by default)
+        hostname: "localhost",
+        pathname: "/images/*", // Allow any image in the /images/ folder
+      },
+      {
+        protocol: "http", // Allow any subdomain of localhost
+        hostname: "*.localhost",
+        pathname: "/images/*", // Allow any image in the /images/ folder
+      },
+      {
         protocol: "https",
         hostname: "*",
       },
