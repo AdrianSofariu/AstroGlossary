@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Trash2, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -17,15 +17,39 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import EditPostDialog from "@/components/edit-post-dialog";
+import { Post, UserPost } from "@/types";
 
 export default function SinglePostPage() {
   const params = useParams();
   const router = useRouter();
-  const { posts, deletePost } = usePosts();
+  const { posts, deletePost, getPost } = usePosts();
 
-  const post = posts.find((p) => p.id.toString() === params.postId);
+  const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+
+  const { postId } = useParams();
+
+  const fetchPost = async () => {
+    setLoading(true); // Ensure loading is true before fetching.
+    const fetched = await getPost(postId as string);
+    if (!fetched) {
+      setPost(null); // Post not found.
+    } else {
+      fetched.date = new Date(fetched.date); // Convert date string to Date object.
+      setPost(fetched); // Update state with fetched post.
+    }
+    setLoading(false); // Turn off loading when data is fetched.
+  };
+
+  useEffect(() => {
+    if (!postId) return;
+    fetchPost();
+  }, []);
+
+  if (isLoading) {
+    return <p className="text-center text-gray-500 text-xl">Loading...</p>;
+  }
 
   if (!post) {
     return <p className="text-center text-red-500 text-xl">Post not found.</p>;

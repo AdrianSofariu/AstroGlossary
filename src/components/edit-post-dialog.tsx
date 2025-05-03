@@ -69,6 +69,7 @@ export default function EditPostDialog({ post }: UserPost) {
     };
 
     updatePost(updatedPost);
+    router.push("/"); // Redirect to the posts page after update
   };
 
   return (

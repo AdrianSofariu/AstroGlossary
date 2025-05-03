@@ -32,12 +32,14 @@ export default function PostGrid() {
     if (
       !loaderRef.current ||
       !hasMorePosts ||
+      posts.length >= pagination.total ||
       isLoading ||
       !isOnline ||
       !isServerUp
     )
       return;
 
+    if (pagination.offset >= pagination.total) return; // No more posts to load
     const observer = new IntersectionObserver(
       async ([entry]) => {
         if (entry.isIntersecting && !isLoading) {
@@ -55,6 +57,11 @@ export default function PostGrid() {
     observer.observe(loaderRef.current);
     return () => observer.disconnect();
   }, [posts.length, isLoading, hasMorePosts, isOnline, isServerUp]);
+
+  useEffect(() => {
+    pagination.offset = 0; // Reset offset when page size changes
+    posts.length = 0; // Clear posts when page size changes
+  }, []);
 
   return (
     <div className="pb-8">

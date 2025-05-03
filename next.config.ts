@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   env: {
-    API_CONNECTION_STRING: "http://localhost:3001/api",
+    API_CONNECTION_STRING: "http://172.30.245.80:3001/api",
+    API_SOCKET: "http://172.30.245.80:3001",
   },
   images: {
     remotePatterns: [
@@ -26,7 +27,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "http", // Use 'http' for local development server (Next.js uses http locally by default)
-        hostname: "localhost",
+        hostname: "192.168.2.107",
+        pathname: "/images/*", // Allow any image in the /images/ folder
+      },
+      {
+        protocol: "http", // Use 'http' for local development server (Next.js uses http locally by default)
+        hostname: "172.30.245.80",
         pathname: "/images/*", // Allow any image in the /images/ folder
       },
       {

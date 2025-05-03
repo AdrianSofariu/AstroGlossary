@@ -33,9 +33,7 @@ export default function PostChart() {
   const [socket, setSocket] = useState<any>(null);
 
   useEffect(() => {
-    const newSocket = io(
-      process.env.API_CONNECTION_STRING || "http://localhost:3001"
-    );
+    const newSocket = io(process.env.API_SOCKET);
 
     newSocket.on("update", async () => {
       await fetchAllPosts();
@@ -46,7 +44,7 @@ export default function PostChart() {
     return () => {
       newSocket.disconnect();
     };
-  }, [fetchAllPosts]);
+  }, []);
 
   // Function to start/stop post generation
   const toggleGeneration = () => {

@@ -112,6 +112,20 @@ export const ContextProvider = ({ children }: any) => {
     };
   }, []);
 
+  //log ip
+  useEffect(() => {
+    try {
+      const logIp = async () => {
+        const response = await axios.post(
+          process.env.API_CONNECTION_STRING + "/log"
+        );
+      };
+      logIp();
+    } catch (error) {
+      console.error("Error logging IP:", error);
+    }
+  }, []);
+
   //update offline queue when online
   useEffect(() => {
     if (hasMouted.current) {

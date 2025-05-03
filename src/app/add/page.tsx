@@ -66,7 +66,6 @@ export default function AddImagePage() {
 
       return response.data.fileUrl; // Return the uploaded file URL
     } catch (error) {
-      console.error("Error uploading image:", error);
       return "";
     }
   };
@@ -93,7 +92,7 @@ export default function AddImagePage() {
     // Upload the image file and get the URL
     const imageUrl = await uploadImage(newPost.imageFile);
 
-    if (!imageUrl) {
+    if (imageUrl == "") {
       return alert("Image upload failed!");
     }
 

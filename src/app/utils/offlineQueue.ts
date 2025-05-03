@@ -1,5 +1,6 @@
 // utils/offlineQueue.ts
 import axios from "axios";
+import { request } from "http";
 
 const STORAGE_KEY = "offline_operations";
 
@@ -20,6 +21,7 @@ export const processQueue = async (isOnline: boolean, isServerUp: boolean) => {
       await axios(op.request); // Execute the operation
     } catch (error) {
       //Try next operation if one fails
+      console.log(op.request);
       console.error("Failed to sync operation:", error);
     }
   }
