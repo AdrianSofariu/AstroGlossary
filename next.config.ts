@@ -3,8 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   env: {
-    API_CONNECTION_STRING: "http://172.30.245.80:3001/api",
-    API_SOCKET: "http://172.30.245.80:3001",
+    API_CONNECTION_STRING: "http://192.168.2.107:3001/api",
+    API_SOCKET: "http://192.168.2.107:3001",
   },
   images: {
     remotePatterns: [

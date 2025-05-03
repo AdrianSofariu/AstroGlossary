@@ -17,14 +17,16 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import EditPostDialog from "@/components/edit-post-dialog";
-import { Post, UserPost } from "@/types";
+import { Post, PostWithUser, UserPost } from "@/types";
+import { useUser } from "@/app/context/usercontext";
 
 export default function SinglePostPage() {
   const params = useParams();
   const router = useRouter();
+  const { user } = useUser();
   const { posts, deletePost, getPost } = usePosts();
 
-  const [post, setPost] = useState<Post | null>(null);
+  const [post, setPost] = useState<PostWithUser | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
@@ -56,6 +58,10 @@ export default function SinglePostPage() {
   }
 
   const handleDelete = () => {
+    if (post.user_id !== user?.id) {
+      alert("You are not authorized to delete this post.");
+      return;
+    }
     deletePost(post.id);
     setOpen(false);
     router.push("/"); // Redirect after deleting
@@ -63,18 +69,20 @@ export default function SinglePostPage() {
 
   return (
     <div className="py-5 flex flex-col justify-center items-center">
-      <div className="absolute top-4 right-4 flex space-x-2">
-        <EditPostDialog post={post} />
-        <Button
-          data-testid="delete-post"
-          onClick={() => setOpen(true)}
-          size="icon"
-          className="bg-[#181832] hover:bg-pink-500 text-white rounded-full"
-          variant="destructive"
-        >
-          <Trash2 size={18} />
-        </Button>
-      </div>
+      {post.user_id === user?.id && (
+        <div className="absolute top-4 right-4 flex space-x-2">
+          <EditPostDialog post={post} />
+          <Button
+            data-testid="delete-post"
+            onClick={() => setOpen(true)}
+            size="icon"
+            className="bg-[#181832] hover:bg-pink-500 text-white rounded-full"
+            variant="destructive"
+          >
+            <Trash2 size={18} />
+          </Button>
+        </div>
+      )}
       <div className="relative priority w-full rounded-lg max-w-5xl mx-auto aspect-[16/9]">
         <Image
           alt=""
@@ -95,6 +103,7 @@ export default function SinglePostPage() {
         <h1 className="text-4xl font-bold">{post.title}</h1>
         <p className="text-gray-600 text-lg">Type: {post.type}</p>
         <p className="text-gray-700">{post.subject}</p>
+        <p className="text-gray-700">{post.username}</p>
         <p className="text-gray-500 text-sm mt-2">
           {post.date.toLocaleDateString("en-GB")}
         </p>

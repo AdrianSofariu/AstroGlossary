@@ -16,6 +16,7 @@ jest.mock("@/app/data/posts", () => ({
       subject: "Next.js",
       source: "blog",
       date: new Date(),
+      user_id: "1",
     },
     {
       id: "2",
@@ -24,6 +25,7 @@ jest.mock("@/app/data/posts", () => ({
       subject: "TypeScript",
       source: "magazine",
       date: new Date(2023, 0, 2),
+      user_id: "2",
     },
   ] as Post[],
 }));
@@ -40,6 +42,7 @@ describe("GET /api/posts/all", () => {
         subject: "Next.js",
         source: "blog",
         date: new Date(2023, 0, 1),
+        user_id: "1",
       },
       {
         id: "2",
@@ -48,6 +51,7 @@ describe("GET /api/posts/all", () => {
         subject: "TypeScript",
         source: "magazine",
         date: new Date(2023, 0, 2),
+        user_id: "2",
       }
     );
   });
@@ -66,6 +70,7 @@ describe("GET /api/posts/all", () => {
           subject: expect.any(String),
           source: expect.any(String),
           date: expect.any(String), // Dates are stringified in JSON
+          user_id: expect.any(String),
         }),
       ]),
       total: 2,
@@ -93,6 +98,7 @@ describe("GET /api/posts/all", () => {
         subject: "React",
         source: "portal",
         date: new Date(2023, 0, 3),
+        user_id: "3",
       },
       {
         id: "4",
@@ -101,6 +107,7 @@ describe("GET /api/posts/all", () => {
         subject: "JavaScript",
         source: "docs",
         date: new Date(2023, 0, 4),
+        user_id: "4",
       },
       {
         id: "5",
@@ -109,6 +116,7 @@ describe("GET /api/posts/all", () => {
         subject: "CSS",
         source: "blog",
         date: new Date(2023, 0, 5),
+        user_id: "5",
       }
     );
 

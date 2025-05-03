@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar} from "@/components/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 import "./globals.css";
 import { ContextProvider } from "./context";
+import { User } from "lucide-react";
+import { UserProvider } from "./context/usercontext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,16 +30,18 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body className={`${geistSans.variable} ${geistMono} antialiased}` }>
-        <ContextProvider>
-        <SidebarProvider>
-          <AppSidebar />
-            <main className="w-full">
-              <SidebarTrigger className="hover:bg-pink-500 cursor-pointer"/>
+      <body className={`${geistSans.variable} ${geistMono} antialiased}`}>
+        <UserProvider>
+          <ContextProvider>
+            <SidebarProvider>
+              <AppSidebar />
+              <main className="w-full">
+                <SidebarTrigger className="hover:bg-pink-500 cursor-pointer" />
                 {children}
-            </main>
-        </SidebarProvider>
-        </ContextProvider>
+              </main>
+            </SidebarProvider>
+          </ContextProvider>
+        </UserProvider>
       </body>
     </html>
   );

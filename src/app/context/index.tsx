@@ -1,5 +1,5 @@
 "use client";
-import { Post } from "@/types";
+import { Post, PostWithUser } from "@/types";
 import React, {
   createContext,
   useContext,
@@ -32,7 +32,7 @@ type AppContextType = {
   addPost: (newPost: Post) => void;
   updatePost: (updatedPost: Post) => void;
   deletePost: (id: string) => void;
-  getPost: (id: string) => Promise<Post | undefined>;
+  getPost: (id: string) => Promise<PostWithUser | undefined>;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   pagination: { total: number; offset: number; limit: number };
@@ -247,7 +247,7 @@ export const ContextProvider = ({ children }: any) => {
   //Function to get a post by id
   const getPost = async (id: string) => {
     try {
-      const post = await axios.get<Post>(
+      const post = await axios.get<PostWithUser>(
         process.env.API_CONNECTION_STRING + "/posts/" + id
       );
       return post.data;
@@ -261,9 +261,24 @@ export const ContextProvider = ({ children }: any) => {
   // Function to add a post
   const addPost = async (newPost: Post) => {
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage
+
+      if (!token) {
+        alert("You are not authenticated");
+        return;
+      }
+
       const response = await axios.post<{ message: string }>(
         process.env.API_CONNECTION_STRING + "/posts",
-        newPost
+        {
+          ...newPost,
+          date: newPost.date.toISOString(), // Convert date to ISO string
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+        }
       );
       if (response.status === 201) {
         // Fetch posts again to update the list
@@ -281,12 +296,10 @@ export const ContextProvider = ({ children }: any) => {
           },
         });
 
-        //update localStorage with new post
+        // Update localStorage with new post
         addPostToCache(newPost); // Add post to cache
-      }
-      //if another error occurs, show alert
-      else if (error instanceof AxiosError) {
-        alert("Failed to add post  - " + error.response?.data.message);
+      } else if (error instanceof AxiosError) {
+        alert("Failed to add post - " + error.response?.data.message);
       }
     }
   };
@@ -294,9 +307,24 @@ export const ContextProvider = ({ children }: any) => {
   // Function to update a post
   const updatePost = async (updatedPost: Post) => {
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage
+
+      if (!token) {
+        alert("You are not authenticated");
+        return;
+      }
+
       const response = await axios.put<{ message: string }>(
         process.env.API_CONNECTION_STRING + "/posts/" + updatedPost.id,
-        updatedPost
+        {
+          ...updatedPost,
+          date: updatedPost.date.toISOString(), // Convert date to ISO string
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+        }
       );
       if (response.status === 200) {
         alert(response.data.message);
@@ -325,8 +353,20 @@ export const ContextProvider = ({ children }: any) => {
   // Function to delete a post
   const deletePost = async (id: string) => {
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage
+
+      if (!token) {
+        alert("You are not authenticated");
+        return;
+      }
+
       const response = await axios.delete<{ message: string }>(
-        process.env.API_CONNECTION_STRING + "/posts/" + id
+        process.env.API_CONNECTION_STRING + "/posts/" + id,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+        }
       );
       if (response.status === 200) {
         alert(response.data.message);

@@ -18,16 +18,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UserPost, Post } from "@/types";
+import { Post, UserPostWithUser } from "@/types";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/app/context/usercontext";
 
 function startsWithLetter(str: string) {
   return /^[A-Za-z]/.test(str);
 }
 
-export default function EditPostDialog({ post }: UserPost) {
+export default function EditPostDialog({ post }: UserPostWithUser) {
   const { types, updatePost } = usePosts();
+  const { user } = useUser();
   const router = useRouter();
 
   const [editedPost, setEditedPost] = useState({
@@ -47,6 +49,10 @@ export default function EditPostDialog({ post }: UserPost) {
   };
 
   const handleUpdate = () => {
+    if (post.user_id !== user?.id) {
+      return alert("You are not authorized to edit this post.");
+    }
+
     if (!editedPost.title || !editedPost.type || !editedPost.subject) {
       return alert("All fields are required!");
     }
@@ -66,6 +72,7 @@ export default function EditPostDialog({ post }: UserPost) {
       subject: editedPost.subject,
       source: editedPost.source,
       date: post.date,
+      user_id: post.user_id,
     };
 
     updatePost(updatedPost);

@@ -14,6 +14,7 @@ jest.mock("@/app/data/posts", () => ({
       subject: "Subject 1",
       source: "Source 1",
       date: new Date("2023-01-01"),
+      user_id: "1",
     },
     {
       id: "2",
@@ -22,6 +23,7 @@ jest.mock("@/app/data/posts", () => ({
       subject: "Subject 2",
       source: "Source 2",
       date: new Date("2023-01-02"),
+      user_id: "2",
     },
   ],
 }));
@@ -51,6 +53,7 @@ describe("GET /api/posts/[id]", () => {
         subject: "Subject 1",
         source: "Source 1",
         date: new Date("2023-01-01"),
+        user_id: "1",
       },
       {
         id: "2",
@@ -59,6 +62,7 @@ describe("GET /api/posts/[id]", () => {
         subject: "Subject 2",
         source: "Source 2",
         date: new Date("2023-01-02"),
+        user_id: "2",
       }
     );
   });
@@ -104,6 +108,7 @@ describe("DELETE /api/posts/[id]", () => {
         subject: "Subject 1",
         source: "Source 1",
         date: new Date("2023-01-01"),
+        user_id: "1",
       },
       {
         id: "2",
@@ -112,6 +117,7 @@ describe("DELETE /api/posts/[id]", () => {
         subject: "Subject 2",
         source: "Source 2",
         date: new Date("2023-01-02"),
+        user_id: "2",
       }
     );
   });

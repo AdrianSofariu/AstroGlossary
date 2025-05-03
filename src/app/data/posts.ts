@@ -1,7 +1,7 @@
 import { Post } from "@/types";
 
 export const posts: Post[] = [
-  {
+  /*{
     id: "1",
     title: "Image 1",
     type: "galaxy",
@@ -333,5 +333,5 @@ export const posts: Post[] = [
     source:
       "https://cdn.mos.cms.futurecdn.net/hCXYB5YKXzdq2WEHYEe36d-970-80.jpg",
     date: new Date(2025, 2, 24),
-  },
+  },*/
 ];

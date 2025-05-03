@@ -17,6 +17,7 @@ jest.mock("@/app/data/posts", () => ({
       type: "type1",
       date: new Date(2023, 0, 1),
       subject: "subject1",
+      user_id: "1",
     },
     {
       id: "2",
@@ -25,6 +26,7 @@ jest.mock("@/app/data/posts", () => ({
       type: "type2",
       date: new Date(2023, 0, 2),
       subject: "subject2",
+      user_id: "2",
     },
     {
       id: "3",
@@ -33,6 +35,7 @@ jest.mock("@/app/data/posts", () => ({
       type: "type1",
       date: new Date(2023, 0, 3),
       subject: "subject3",
+      user_id: "3",
     },
   ],
 }));
@@ -53,6 +56,7 @@ describe("GET /api/posts", () => {
         type: "type1",
         date: new Date(2023, 0, 1),
         subject: "subject1",
+        user_id: "1",
       },
       {
         id: "2",
@@ -61,6 +65,7 @@ describe("GET /api/posts", () => {
         type: "type2",
         date: new Date(2023, 0, 2),
         subject: "subject2",
+        user_id: "2",
       },
       {
         id: "3",
@@ -69,6 +74,7 @@ describe("GET /api/posts", () => {
         type: "type1",
         date: new Date(2023, 0, 3),
         subject: "subject3",
+        user_id: "3",
       }
     );
   });
@@ -156,6 +162,7 @@ describe("POST /api/posts", () => {
       type: "type1",
       date: new Date(2023, 0, 1),
       subject: "subject1",
+      user_id: "1",
     });
   });
 
@@ -167,6 +174,7 @@ describe("POST /api/posts", () => {
       type: "type2",
       date: new Date(2023, 0, 2),
       subject: "subject2",
+      user_id: "2",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -217,6 +225,7 @@ describe("POST /api/posts", () => {
       type: "type2",
       date: new Date(2023, 0, 2),
       subject: "subject2",
+      user_id: "2",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -243,6 +252,7 @@ describe("POST /api/posts", () => {
       type: "invalid-type", // Not in mockTypes
       date: new Date(2023, 0, 2),
       subject: "subject2",
+      user_id: "2",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -269,6 +279,7 @@ describe("POST /api/posts", () => {
       type: "type2",
       date: new Date(2023, 0, 2),
       subject: "subject2",
+      user_id: "2",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -295,6 +306,7 @@ describe("POST /api/posts", () => {
       type: "type2",
       date: new Date("invalid-date"), // Invalid date
       subject: "subject2",
+      user_id: "2",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -324,6 +336,7 @@ describe("PUT /api/posts", () => {
       type: "type1",
       date: new Date(2023, 0, 1),
       subject: "subject1",
+      user_id: "1",
     });
   });
 
@@ -335,6 +348,7 @@ describe("PUT /api/posts", () => {
       type: "type2", // Can change to another valid type
       date: new Date(2023, 0, 1), // Must match original
       subject: "updated-subject",
+      user_id: "1",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -364,6 +378,7 @@ describe("PUT /api/posts", () => {
       type: "type1",
       date: new Date(2023, 0, 1),
       subject: "subject1",
+      user_id: "1",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -413,6 +428,7 @@ describe("PUT /api/posts", () => {
       type: "invalid-type", // Not in mockTypes
       date: new Date(2023, 0, 1),
       subject: "subject1",
+      user_id: "1",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -439,6 +455,7 @@ describe("PUT /api/posts", () => {
       type: "type1",
       date: new Date(2023, 0, 1),
       subject: "subject1",
+      user_id: "1",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -465,6 +482,7 @@ describe("PUT /api/posts", () => {
       type: "type1",
       date: new Date(2023, 0, 1),
       subject: "subject1",
+      user_id: "1",
     };
 
     const req = new Request("http://localhost/api/posts", {
@@ -491,6 +509,7 @@ describe("PUT /api/posts", () => {
       type: "type1",
       date: new Date(2023, 0, 10), // Different from original
       subject: "subject1",
+      user_id: "1",
     };
 
     const req = new Request("http://localhost/api/posts", {

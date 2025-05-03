@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Post } from "@/types";
 import axios from "axios";
+import { useUser } from "../context/usercontext";
 
 function startsWithLetter(str: string) {
   return /^[A-Za-z]/.test(str);
@@ -22,6 +23,7 @@ function startsWithLetter(str: string) {
 
 export default function AddImagePage() {
   const { types, addPost } = usePosts(); // Get types from context
+  const { user } = useUser(); // Get user from context
   const [newPost, setNewPost] = useState({
     title: "",
     type: "",
@@ -72,6 +74,10 @@ export default function AddImagePage() {
 
   // Handle form submission
   const handleSubmit = async () => {
+    if (user === null) {
+      return alert("You must be logged in to add a post!");
+    }
+
     if (
       !newPost.title ||
       !newPost.type ||
@@ -104,6 +110,7 @@ export default function AddImagePage() {
       subject: newPost.subject,
       source: imageUrl, // Store the image URL
       date: new Date(),
+      user_id: user.id,
     };
 
     addPost(post); // Add the new post
