@@ -12,6 +12,7 @@ import {
 import { usePosts } from "@/app/context";
 import { io } from "socket.io-client";
 import FileUploader from "@/components/file-uploader";
+import { useUser } from "../context/usercontext";
 
 // Dynamic import to prevent SSR issues
 const socketClientPromise = import("socket.io-client").then(
@@ -31,9 +32,17 @@ export default function PostChart() {
   const { allPosts, fetchAllPosts } = usePosts();
   const [isGenerating, setIsGenerating] = useState(false);
   const [socket, setSocket] = useState<any>(null);
+  const { user } = useUser(); // Get user from context
 
   useEffect(() => {
-    const newSocket = io(process.env.API_SOCKET);
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!user || !token) return;
+
+    const newSocket = io(process.env.API_SOCKET, {
+      auth: { token },
+    });
+    //const newSocket = io(process.env.API_SOCKET);
 
     newSocket.on("update", async () => {
       await fetchAllPosts();
@@ -48,7 +57,12 @@ export default function PostChart() {
 
   // Function to start/stop post generation
   const toggleGeneration = () => {
-    if (!socket) return;
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!socket || !user || !token) {
+      alert("User not authenticated. Please log in.");
+      return;
+    }
 
     if (isGenerating) {
       socket.emit("stop");
@@ -102,16 +116,22 @@ export default function PostChart() {
             />
           </PieChart>
         </ResponsiveContainer>
-        <button
-          onClick={toggleGeneration}
-          className={`w-full mt-4 px-4 py-2 rounded-lg text-white font-bold transition ${
-            isGenerating
-              ? "bg-red-500 hover:bg-red-600"
-              : "bg-green-500 hover:bg-green-600"
-          }`}
-        >
-          {isGenerating ? "Stop Generating Posts" : "Start Generating Posts"}
-        </button>
+        {user &&
+          typeof window !== "undefined" &&
+          localStorage.getItem("token") && (
+            <button
+              onClick={toggleGeneration}
+              className={`w-full mt-4 px-4 py-2 rounded-lg text-white font-bold transition ${
+                isGenerating
+                  ? "bg-red-500 hover:bg-red-600"
+                  : "bg-green-500 hover:bg-green-600"
+              }`}
+            >
+              {isGenerating
+                ? "Stop Generating Posts"
+                : "Start Generating Posts"}
+            </button>
+          )}
       </div>
       <FileUploader />
     </div>
