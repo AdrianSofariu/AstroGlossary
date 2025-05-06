@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "http", // Use 'http' for local development server (Next.js uses http locally by default)
-        hostname: "172.30.244.168",
+        hostname: "172.30.244.167",
         pathname: "/images/*", // Allow any image in the /images/ folder
       },
       {
