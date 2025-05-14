@@ -1,4 +1,4 @@
-import { usePosts } from "@/app/context";
+/*import { usePosts } from "@/app/context";
 import {
   Pagination,
   PaginationContent,
@@ -8,31 +8,56 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface PaginationControlProps {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+  onNext: () => void;
+  onPrevious: () => void;
 }
 
 export function PaginationControls({
   hasNextPage,
   hasPreviousPage,
+  onNext,
+  onPrevious,
 }: PaginationControlProps) {
+  const { pagination, setPagination } = usePosts();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const page = searchParams.get("page") ?? "1";
-  const pageSize = searchParams.get("pageSize") ?? "8";
-  const totalPages = Math.ceil(
-    usePosts().getFilteredPosts().length / parseInt(pageSize)
-  );
+  const page = pagination.page;
+  const pageSize = pagination.limit;
+  const totalPages = Math.ceil(pagination.total / pageSize);
+
+  // Handle page click
+  const handlePageChange = (pageNumber: number) => {
+    setPagination((prev) => ({ ...prev, page: pageNumber }));
+    router.push(`/?page=${pageNumber}&pageSize=${pageSize}`);
+  };
+
+  // Handle next page click
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      const nextPage = page + 1;
+      setPagination((prev) => ({ ...prev, page: nextPage }));
+      router.push(`/?page=${nextPage}&pageSize=${pageSize}`);
+    }
+  };
+
+  // Handle previous page click
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      const prevPage = page - 1;
+      setPagination((prev) => ({ ...prev, page: prevPage }));
+      router.push(`/?page=${prevPage}&pageSize=${pageSize}`);
+    }
+  };
 
   const getVisiblePages = () => {
     let visiblePages = [];
     let delta = 1;
-
-    let currentPage = Number(page);
+    let currentPage = page;
 
     //always show the first page and the page before the current page
     if (currentPage - delta > 2) {
@@ -51,17 +76,6 @@ export function PaginationControls({
       for (let i = currentPage + 1; i <= totalPages; i++) visiblePages.push(i);
     }
 
-    //let startPage = Math.max(1, Number(page) - Math.floor(Number(page) / 2));
-    //let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-    //if (endPage - startPage < maxVisiblePages - 1) {
-    //  startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    //}
-
-    //for (let i = startPage; i <= endPage; i++) {
-    //  visiblePages.push(i);
-    //}
-
     return visiblePages;
   };
 
@@ -70,47 +84,35 @@ export function PaginationControls({
       <PaginationContent>
         {hasPreviousPage && (
           <PaginationItem className="cursor-pointer">
-            <PaginationPrevious
-              onClick={() => {
-                router.push(
-                  `/?page=${parseInt(page) - 1}&pageSize=${pageSize}`
-                );
-              }}
-
-              //href={`/?page=${parseInt(page) - 1}&pageSize=${pageSize}`}
-            />
+            <PaginationPrevious onClick={handlePreviousPage} />
           </PaginationItem>
         )}
         {getVisiblePages().map((pageNumber) =>
           typeof pageNumber === "number" ? (
             <PaginationItem key={pageNumber} className="cursor-pointer">
               <PaginationLink
-                onClick={() => {
-                  router.push(`/?page=${pageNumber}&pageSize=${pageSize}`);
-                }}
-                isActive={pageNumber === parseInt(page)}
+                onClick={() => handlePageChange(pageNumber)}
+                isActive={pageNumber === page}
               >
                 {pageNumber}
               </PaginationLink>
             </PaginationItem>
           ) : (
-            <PaginationItem key="ellipsis">
+            //make key unique
+            <PaginationItem
+              key={`ellipsis-${Date.now.toString()}`}
+              className="cursor-pointer"
+            >
               <PaginationEllipsis />
             </PaginationItem>
           )
         )}
         {hasNextPage && (
           <PaginationItem className="cursor-pointer">
-            <PaginationNext
-              onClick={() => {
-                router.push(
-                  `/?page=${parseInt(page) + 1}&pageSize=${pageSize}`
-                );
-              }}
-            />
+            <PaginationNext onClick={handleNextPage} />
           </PaginationItem>
         )}
       </PaginationContent>
     </Pagination>
   );
-}
+}*/

@@ -3,48 +3,94 @@ import { cn } from "@/lib/utils";
 import { UserPost } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePosts } from "@/app/context";
-import { isToday, isThisWeek, formatDistanceToNow } from "date-fns";
-import { Pagination } from "./ui/pagination";
-import { PaginationControls } from "./page_nav";
-import { useSearchParams } from "next/navigation";
+import { isToday, isThisWeek } from "date-fns";
 
 export default function PostGrid() {
-  //const posts = usePosts().getFilteredPosts();
-  const searchParams = useSearchParams();
+  const { posts, pagination, fetchPosts, isOnline, isServerUp } = usePosts();
 
-  const page = searchParams.get("page") ?? "1";
-  const pageSize = searchParams.get("pageSize") ?? "8";
+  //Retrieve page and pageSize from URL search params
+  //If not present, default to 1 and 8 respectively
+  const pageSize = pagination.limit;
 
-  const start = (Number(page) - 1) * Number(pageSize);
-  const end = start + Number(pageSize);
+  //Calculate the posts to display based on the current page and pageSize
+  //const start = (page - 1) * pageSize;
+  //const end = start + pageSize;
+  const loaderRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const posts = usePosts().getFilteredPosts().slice(start, end);
+  // Calculate if more posts exist
+  const hasMorePosts = posts.length < pagination.total;
 
-  const { getFilteredPosts } = usePosts();
+  // Fetch more posts when scroll reaches loader
+  useEffect(() => {
+    if (
+      !loaderRef.current ||
+      !hasMorePosts ||
+      posts.length >= pagination.total ||
+      isLoading ||
+      !isOnline ||
+      !isServerUp
+    )
+      return;
 
-  const [filteredPosts, setFilteredPosts] = useState(getFilteredPosts());
+    if (pagination.offset >= pagination.total) return; // No more posts to load
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (entry.isIntersecting && !isLoading) {
+          setIsLoading(true);
+          try {
+            await fetchPosts(); // Fetch next page of posts
+          } finally {
+            setIsLoading(false);
+          }
+        }
+      },
+      { threshold: 1 } // Trigger when loader is 50% visible
+    );
+
+    observer.observe(loaderRef.current);
+    return () => observer.disconnect();
+  }, [posts.length, isLoading, hasMorePosts, isOnline, isServerUp]);
 
   useEffect(() => {
-    setFilteredPosts(getFilteredPosts());
-  }, [getFilteredPosts]);
+    pagination.offset = 0; // Reset offset when page size changes
+    posts.length = 0; // Clear posts when page size changes
+  }, []);
 
   return (
     <div className="pb-8">
-      <div className="max-w-2xl mx-auto py-8 px-4 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="max-w-2xl mx-auto py-8 px-4 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8 overflow-y-auto h-3/4">
         <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {posts.map((item) => (
             <BlurImage key={item.id} post={item} />
           ))}
         </div>
       </div>
-      <div className="py-2 flex justify-center">
-        <PaginationControls
-          hasNextPage={end < filteredPosts.length}
-          hasPreviousPage={start > 0}
-        />
+      <div ref={loaderRef} className="py-2 text-center">
+        {!isOnline || !isServerUp ? (
+          <p className="text-yellow-600">
+            Offline - Cannot bring in more posts
+          </p>
+        ) : isLoading ? (
+          <p className="text-gray-500">Loading more posts...</p>
+        ) : !hasMorePosts ? (
+          <p className="text-gray-400">No more posts to load</p>
+        ) : (
+          <p className="text-gray-400">Scroll to load more</p>
+        )}
       </div>
+      {/*<div className="py-2 flex justify-center">
+        <PaginationControls
+          hasNextPage={end < pagination.total}
+          hasPreviousPage={start > 0}
+          onNext={() => setPagination((prev) => ({ ...prev, page: page + 1 }))}
+          onPrevious={() =>
+            setPagination((prev) => ({ ...prev, page: page - 1 }))
+          }
+        />
+      </div>*/}
     </div>
   );
 }

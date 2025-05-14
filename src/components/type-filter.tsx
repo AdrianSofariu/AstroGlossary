@@ -23,7 +23,7 @@ export function DropdownMenuCheckboxes() {
   const searchParams = useSearchParams();
   let pageSize = searchParams.get("pageSize") ?? "8";
 
-  const { types, checkedTypes, setCheckedTypes } = usePosts();
+  const { types, checkedTypes, setCheckedTypes, setPagination } = usePosts();
 
   const [tempCheckedTypes, setTempCheckedTypes] = React.useState<
     Record<string, boolean>
@@ -31,8 +31,6 @@ export function DropdownMenuCheckboxes() {
 
   React.useEffect(() => {
     setTempCheckedTypes(checkedTypes);
-    console.log(checkedTypes);
-    console.log(tempCheckedTypes);
   }, [checkedTypes]);
 
   const handleCheckedChange = (type: string, checked: boolean) => {
@@ -41,10 +39,14 @@ export function DropdownMenuCheckboxes() {
       [type]: checked,
     }));
     //set first page when filter changes
-    router.push(`/?page=1&pageSize=${pageSize}`);
   };
 
   const handleDropdownClose = () => {
+    if (JSON.stringify(checkedTypes) !== JSON.stringify(tempCheckedTypes)) {
+      // Redirect to the first page if the types are different
+      router.push(`/?page=1&pageSize=${pageSize}`);
+      setPagination((prev) => ({ ...prev, page: 1 }));
+    }
     setCheckedTypes(tempCheckedTypes);
   };
 
