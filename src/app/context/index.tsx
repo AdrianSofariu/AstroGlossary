@@ -8,8 +8,9 @@ import React, {
   cache,
   useRef,
 } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { addToQueue, processQueue } from "../utils/offlineQueue";
+import { AxiosError } from "axios";
 
 /// Function to save posts to localStorage when offline
 const savePostsToLocalStorage = (posts: Post[]) => {
@@ -96,7 +97,9 @@ export const ContextProvider = ({ children }: any) => {
 
     const checkServerStatus = async () => {
       try {
-        await axios.get(process.env.API_CONNECTION_STRING + "/health");
+        await axios.get(
+          process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/health"
+        );
         setIsServerUp(true);
       } catch (error) {
         setIsServerUp(false);
@@ -117,7 +120,7 @@ export const ContextProvider = ({ children }: any) => {
     try {
       const logIp = async () => {
         const response = await axios.post(
-          process.env.API_CONNECTION_STRING + "/log"
+          process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/log"
         );
       };
       logIp();
@@ -164,7 +167,7 @@ export const ContextProvider = ({ children }: any) => {
   const fetchTypes = async () => {
     try {
       const response = await axios.get(
-        process.env.API_CONNECTION_STRING + "/types"
+        process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/types"
       );
 
       //set types as string[]
@@ -203,7 +206,7 @@ export const ContextProvider = ({ children }: any) => {
         (type) => checkedTypes[type]
       );
       const { data } = await axios.get<PostResponse>(
-        process.env.API_CONNECTION_STRING + "/posts",
+        process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/posts",
         {
           params: {
             search: searchTerm,
@@ -248,7 +251,7 @@ export const ContextProvider = ({ children }: any) => {
   const getPost = async (id: string) => {
     try {
       const post = await axios.get<PostWithUser>(
-        process.env.API_CONNECTION_STRING + "/posts/" + id
+        process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/posts/" + id
       );
       return post.data;
     } catch (error) {
@@ -269,7 +272,7 @@ export const ContextProvider = ({ children }: any) => {
       }
 
       const response = await axios.post<{ message: string }>(
-        process.env.API_CONNECTION_STRING + "/posts",
+        process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/posts",
         {
           ...newPost,
           date: newPost.date.toISOString(), // Convert date to ISO string
@@ -281,6 +284,7 @@ export const ContextProvider = ({ children }: any) => {
         }
       );
       if (response.status === 201) {
+        alert("Post added successfully!");
         // Fetch posts again to update the list
         pagination.offset = 0; // Reset offset to 0
         posts.length = 0; // Clear posts array
@@ -291,7 +295,7 @@ export const ContextProvider = ({ children }: any) => {
         addToQueue({
           request: {
             method: "POST",
-            url: process.env.API_CONNECTION_STRING + "/posts",
+            url: process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/posts",
             data: newPost,
           },
         });
@@ -315,7 +319,9 @@ export const ContextProvider = ({ children }: any) => {
       }
 
       const response = await axios.put<{ message: string }>(
-        process.env.API_CONNECTION_STRING + "/posts/" + updatedPost.id,
+        process.env.NEXT_PUBLIC_API_CONNECTION_STRING +
+          "/posts/" +
+          updatedPost.id,
         {
           ...updatedPost,
           date: updatedPost.date.toISOString(), // Convert date to ISO string
@@ -337,7 +343,10 @@ export const ContextProvider = ({ children }: any) => {
         addToQueue({
           request: {
             method: "PUT",
-            url: process.env.API_CONNECTION_STRING + "/posts/" + updatedPost.id,
+            url:
+              process.env.NEXT_PUBLIC_API_CONNECTION_STRING +
+              "/posts/" +
+              updatedPost.id,
             data: updatedPost,
           },
         });
@@ -361,7 +370,7 @@ export const ContextProvider = ({ children }: any) => {
       }
 
       const response = await axios.delete<{ message: string }>(
-        process.env.API_CONNECTION_STRING + "/posts/" + id,
+        process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/posts/" + id,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token in the Authorization header
@@ -379,7 +388,7 @@ export const ContextProvider = ({ children }: any) => {
         addToQueue({
           request: {
             method: "DELETE",
-            url: process.env.API_CONNECTION_STRING + "/posts/" + id,
+            url: process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/posts/" + id,
           },
         });
 
@@ -395,7 +404,7 @@ export const ContextProvider = ({ children }: any) => {
   const fetchAllPosts = async () => {
     try {
       const response = await axios.get<AllPostsResponse>(
-        process.env.API_CONNECTION_STRING + "/posts/all"
+        process.env.NEXT_PUBLIC_API_CONNECTION_STRING + "/posts/all"
       );
       const formattedPosts = response.data.posts.map((post) => ({
         ...post,

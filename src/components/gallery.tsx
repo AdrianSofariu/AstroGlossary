@@ -5,11 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePosts } from "@/app/context";
-import { isToday, isThisWeek, formatDistanceToNow } from "date-fns";
-import { useSearchParams } from "next/navigation";
-import { debounce } from "lodash";
-import { off } from "process";
-import { waitFor } from "@testing-library/dom";
+import { isToday, isThisWeek } from "date-fns";
 
 export default function PostGrid() {
   const { posts, pagination, fetchPosts, isOnline, isServerUp } = usePosts();

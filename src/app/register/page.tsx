@@ -30,7 +30,7 @@ export default function Register() {
       console.log(password);
       console.log(username);
       const response = await axios.post(
-        `${process.env.API_CONNECTION_STRING}/auth/register`, // Using the environment variable for the API base URL
+        `${process.env.NEXT_PUBLIC_API_CONNECTION_STRING}/auth/register`, // Using the environment variable for the API base URL
         {
           email,
           password,

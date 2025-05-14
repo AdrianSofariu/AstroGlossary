@@ -21,7 +21,7 @@ export function AppSidebar() {
   const handleLogout = async () => {
     try {
       // Send a logout request to the API to clear the JWT token on the server
-      const apiUrl = process.env.API_CONNECTION_STRING;
+      const apiUrl = process.env.NEXT_PUBLIC_API_CONNECTION_STRING;
       await axios.post(`${apiUrl}/auth/logout`, {}, { withCredentials: true });
 
       // Remove token and user data from localStorage

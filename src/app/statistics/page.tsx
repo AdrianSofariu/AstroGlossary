@@ -39,7 +39,7 @@ export default function PostChart() {
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!user || !token) return;
 
-    const newSocket = io(process.env.API_SOCKET, {
+    const newSocket = io(process.env.NEXT_PUBLIC_API_SOCKET, {
       auth: { token },
     });
     //const newSocket = io(process.env.API_SOCKET);

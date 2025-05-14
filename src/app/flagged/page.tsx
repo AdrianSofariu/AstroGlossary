@@ -28,7 +28,7 @@ export default function FlaggedUsersPage() {
       const fetchFlaggedUsers = async () => {
         try {
           const response = await axios.get(
-            `${process.env.API_CONNECTION_STRING}/flagged`,
+            `${process.env.NEXT_PUBLIC_API_CONNECTION_STRING}/flagged`,
             { withCredentials: true }
           );
 

@@ -22,7 +22,7 @@ export default function Login() {
     try {
       // Send the login request to your Express API
       const response = await axios.post(
-        `${process.env.API_CONNECTION_STRING}/auth/login`,
+        `${process.env.NEXT_PUBLIC_API_CONNECTION_STRING}/auth/login`,
         { email, password }
       );
 
@@ -41,8 +41,16 @@ export default function Login() {
         // Redirect to a dashboard or home page on success
         router.push("/");
       }
-    } catch (err: any) {
-      setError("Invalid email or password"); // Handle the error if login fails
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // If the error is an AxiosError, handle it
+        const errorMessage =
+          err.response?.data.message || "Something went wrong";
+        setError(errorMessage); // Display the error message from the API
+      } else {
+        // If the error is not an AxiosError
+        setError("An unexpected error occurred.");
+      } // Handle the error if login fails
     } finally {
       setLoading(false); // Set loading to false once the request completes
     }

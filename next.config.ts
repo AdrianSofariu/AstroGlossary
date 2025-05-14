@@ -3,8 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   env: {
-    API_CONNECTION_STRING: process.env.API_CONNECTION_STRING,
-    API_SOCKET: process.env.API_SOCKET,
+    NEXT_PUBLIC_API_CONNECTION_STRING:
+      "https://astroapi-production-3f43.up.railway.app/api",
+    NEXT_PUBLIC_API_SOCKET:
+      "https://astroapi-production-3f43.up.railway.app:3001",
   },
   images: {
     remotePatterns: [

@@ -21,6 +21,11 @@ function startsWithLetter(str: string) {
   return /^[A-Za-z]/.test(str);
 }
 
+type UploadResponse = {
+  message: string;
+  fileUrl: string;
+};
+
 export default function AddImagePage() {
   const { types, addPost } = usePosts(); // Get types from context
   const { user } = useUser(); // Get user from context
@@ -56,8 +61,8 @@ export default function AddImagePage() {
     formData.append("image", file);
 
     try {
-      const response = await axios.post(
-        `${process.env.API_CONNECTION_STRING}/images/`, // Your backend upload endpoint
+      const response = await axios.post<UploadResponse>(
+        `${process.env.NEXT_PUBLIC_API_CONNECTION_STRING}/images/`, // Your backend upload endpoint
         formData,
         {
           headers: {
