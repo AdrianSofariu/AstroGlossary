@@ -26,6 +26,9 @@ export default function Register() {
 
     try {
       // Send the registration request to your Express API
+      console.log(email);
+      console.log(password);
+      console.log(username);
       const response = await axios.post(
         `${process.env.API_CONNECTION_STRING}/auth/register`, // Using the environment variable for the API base URL
         {

@@ -133,7 +133,6 @@ export default function PostChart() {
             </button>
           )}
       </div>
-      <FileUploader />
     </div>
   );
 }

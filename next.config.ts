@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "media.istockphoto.com",
+        pathname: "/id/**",
+      },
+      {
+        protocol: "https",
         hostname: "upload.wikimedia.org",
         pathname:
           "/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1200px-FullMoon2010.jpg",
@@ -29,6 +34,11 @@ const nextConfig: NextConfig = {
         protocol: "http", // Allow any subdomain of localhost
         hostname: "api.com",
         pathname: "/images/*", // Allow any image in the /images/ folder
+      },
+      {
+        protocol: "https",
+        hostname: "ddhsrmlyaesxltelztba.supabase.co", // your actual Supabase hostname
+        pathname: "/storage/v1/object/public/images/**", // your bucket + path
       },
     ],
   },
