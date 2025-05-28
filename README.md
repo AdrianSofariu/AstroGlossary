@@ -15,6 +15,7 @@ This project combines the power of **Next.js** with the beauty of **astrophotogr
 - **Optimized performance** with static site generation (SSG).
 - A **custom layout and design** to showcase the images in their full glory.
 - **Server-side pagination**
+- **User authentication and post management**
 
 ---
 
